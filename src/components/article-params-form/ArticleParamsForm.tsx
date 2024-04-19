@@ -67,6 +67,8 @@ export const ArticleParamsForm = ({
 			backgroundColor: syleConfig.backgroundColor,
 			contentWidth: syleConfig.contentWidth,
 		});
+
+		setIsOpen(!isOpen);
 	};
 
 	return (

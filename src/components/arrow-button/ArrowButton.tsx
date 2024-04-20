@@ -1,6 +1,7 @@
 import arrow from 'src/images/arrow.svg';
 
 import styles from './ArrowButton.module.scss';
+import clsx from 'clsx';
 
 /** Функция для обработки открытия/закрытия формы */
 interface OnClick {
@@ -26,7 +27,11 @@ export const ArrowButton = ({ onClick, isMenuOpen }: OnClick) => {
 				e.stopPropagation();
 				onClickHandler();
 			}}>
-			<img src={arrow} alt='иконка стрелочки' className={styles.arrow} />
+			<img
+				src={arrow}
+				alt='иконка стрелочки'
+				className={clsx(styles.arrow, isMenuOpen && styles.arrow_open)}
+			/>
 		</div>
 	);
 };

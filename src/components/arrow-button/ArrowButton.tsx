@@ -5,12 +5,12 @@ import styles from './ArrowButton.module.scss';
 /** Функция для обработки открытия/закрытия формы */
 interface OnClick {
 	onClick?: (state: boolean) => void;
-	isOpen?: boolean;
+	isMenuOpen?: boolean;
 }
 
-export const ArrowButton = ({ onClick, isOpen }: OnClick) => {
+export const ArrowButton = ({ onClick, isMenuOpen }: OnClick) => {
 	const onClickHandler = () => {
-		onClick?.(!isOpen);
+		onClick?.(!isMenuOpen);
 	};
 
 	return (
@@ -19,7 +19,9 @@ export const ArrowButton = ({ onClick, isOpen }: OnClick) => {
 			role='button'
 			aria-label='Открыть/Закрыть форму параметров статьи'
 			tabIndex={0}
-			className={`${styles.container} ${isOpen ? styles.container_open : ''}`}
+			className={`${styles.container} ${
+				isMenuOpen ? styles.container_open : ''
+			}`}
 			onClick={(e: React.MouseEvent) => {
 				e.stopPropagation();
 				onClickHandler();

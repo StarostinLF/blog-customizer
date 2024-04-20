@@ -2,7 +2,6 @@ import { ArrowButton } from 'components/arrow-button';
 import { Button } from 'components/button';
 import { Text } from '../text';
 
-import styles from './ArticleParamsForm.module.scss';
 import { FormEvent, useRef, useState } from 'react';
 import { Select } from '../select';
 import {
@@ -18,6 +17,8 @@ import { Separator } from '../separator';
 import { RadioGroup } from '../radio-group';
 import { useOutsideClickClose } from '../select/hooks/useOutsideClickClose';
 
+import styles from './ArticleParamsForm.module.scss';
+
 interface ArticleParamsFormProps {
 	articleState: ArticleStateType;
 	setArticleState: (param: ArticleStateType) => void;
@@ -27,8 +28,8 @@ export const ArticleParamsForm = ({
 	articleState,
 	setArticleState,
 }: ArticleParamsFormProps) => {
-	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [syleConfig, setSyleConfig] = useState({
+	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+	const [formState, setFormState] = useState({
 		fontFamily: articleState.fontFamilyOption,
 		fontSize: articleState.fontSizeOption,
 		fontColor: articleState.fontColor,
@@ -38,14 +39,14 @@ export const ArticleParamsForm = ({
 	const rootRef = useRef<HTMLElement | null>(null);
 
 	useOutsideClickClose({
-		isOpen,
+		isMenuOpen,
 		rootRef,
-		onClose: () => setIsOpen(false),
-		onChange: setIsOpen,
+		onClose: () => setIsMenuOpen(false),
+		onChange: setIsMenuOpen,
 	});
 
 	const formResetHandler = () => {
-		setSyleConfig((prevState) => ({
+		setFormState((prevState) => ({
 			...prevState,
 			fontFamily: defaultArticleState.fontFamilyOption,
 			fontSize: defaultArticleState.fontSizeOption,
@@ -60,22 +61,24 @@ export const ArticleParamsForm = ({
 		evt.preventDefault();
 
 		setArticleState({
-			...syleConfig,
-			fontFamilyOption: syleConfig.fontFamily,
-			fontSizeOption: syleConfig.fontSize,
-			fontColor: syleConfig.fontColor,
-			backgroundColor: syleConfig.backgroundColor,
-			contentWidth: syleConfig.contentWidth,
+			...formState,
+			fontFamilyOption: formState.fontFamily,
+			fontSizeOption: formState.fontSize,
+			fontColor: formState.fontColor,
+			backgroundColor: formState.backgroundColor,
+			contentWidth: formState.contentWidth,
 		});
 
-		setIsOpen(!isOpen);
+		setIsMenuOpen(!isMenuOpen);
 	};
 
 	return (
 		<>
-			<ArrowButton onClick={setIsOpen} isOpen={isOpen} />
+			<ArrowButton onClick={setIsMenuOpen} isMenuOpen={isMenuOpen} />
 			<aside
-				className={`${styles.container} ${isOpen ? styles.container_open : ''}`}
+				className={`${styles.container} ${
+					isMenuOpen ? styles.container_open : ''
+				}`}
 				ref={rootRef}>
 				<form
 					className={styles.form}
@@ -86,10 +89,10 @@ export const ArticleParamsForm = ({
 					</Text>
 					<Select
 						title='Шрифт'
-						selected={syleConfig.fontFamily}
+						selected={formState.fontFamily}
 						options={fontFamilyOptions}
 						onChange={(selectedOption) =>
-							setSyleConfig((prevState) => ({
+							setFormState((prevState) => ({
 								...prevState,
 								fontFamily: selectedOption,
 							}))
@@ -97,11 +100,11 @@ export const ArticleParamsForm = ({
 					/>
 					<RadioGroup
 						options={fontSizeOptions}
-						selected={syleConfig.fontSize}
+						selected={formState.fontSize}
 						title='Размер шрифта'
 						name='Размер шрифта'
 						onChange={(selectedOption) =>
-							setSyleConfig((prevState) => ({
+							setFormState((prevState) => ({
 								...prevState,
 								fontSize: selectedOption,
 							}))
@@ -109,10 +112,10 @@ export const ArticleParamsForm = ({
 					/>
 					<Select
 						options={fontColors}
-						selected={syleConfig.fontColor}
+						selected={formState.fontColor}
 						title='Цвет шрифта'
 						onChange={(selectedOption) =>
-							setSyleConfig((prevState) => ({
+							setFormState((prevState) => ({
 								...prevState,
 								fontColor: selectedOption,
 							}))
@@ -121,10 +124,10 @@ export const ArticleParamsForm = ({
 					<Separator />
 					<Select
 						options={backgroundColors}
-						selected={syleConfig.backgroundColor}
+						selected={formState.backgroundColor}
 						title='Цвет фона'
 						onChange={(selectedOption) =>
-							setSyleConfig((prevState) => ({
+							setFormState((prevState) => ({
 								...prevState,
 								backgroundColor: selectedOption,
 							}))
@@ -132,10 +135,10 @@ export const ArticleParamsForm = ({
 					/>
 					<Select
 						options={contentWidthArr}
-						selected={syleConfig.contentWidth}
+						selected={formState.contentWidth}
 						title='Ширина контента'
 						onChange={(selectedOption) =>
-							setSyleConfig((prevState) => ({
+							setFormState((prevState) => ({
 								...prevState,
 								contentWidth: selectedOption,
 							}))

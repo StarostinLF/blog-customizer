@@ -18,6 +18,7 @@ import { RadioGroup } from '../radio-group';
 import { useOutsideClickClose } from '../select/hooks/useOutsideClickClose';
 
 import styles from './ArticleParamsForm.module.scss';
+import clsx from 'clsx';
 
 interface ArticleParamsFormProps {
 	articleState: ArticleStateType;
@@ -76,9 +77,7 @@ export const ArticleParamsForm = ({
 		<>
 			<ArrowButton onClick={setIsMenuOpen} isMenuOpen={isMenuOpen} />
 			<aside
-				className={`${styles.container} ${
-					isMenuOpen ? styles.container_open : ''
-				}`}
+				className={clsx(styles.container, isMenuOpen && styles.container_open)}
 				ref={rootRef}>
 				<form
 					className={styles.form}

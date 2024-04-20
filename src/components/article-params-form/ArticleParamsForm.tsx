@@ -16,6 +16,7 @@ import {
 import { Separator } from '../separator';
 import { RadioGroup } from '../radio-group';
 import { useOutsideClickClose } from '../select/hooks/useOutsideClickClose';
+import { useClose } from './hooks/useClose';
 
 import styles from './ArticleParamsForm.module.scss';
 import clsx from 'clsx';
@@ -37,13 +38,21 @@ export const ArticleParamsForm = ({
 		backgroundColor: articleState.backgroundColor,
 		contentWidth: articleState.contentWidth,
 	});
+
 	const rootRef = useRef<HTMLElement | null>(null);
+	const formRef = useRef<HTMLFormElement>(null);
 
 	useOutsideClickClose({
 		isMenuOpen,
 		rootRef,
 		onClose: () => setIsMenuOpen(false),
 		onChange: setIsMenuOpen,
+	});
+
+	useClose({
+		isMenuOpen: isMenuOpen,
+		onClose: () => setIsMenuOpen(false),
+		rootRef: formRef,
 	});
 
 	const formResetHandler = () => {
@@ -55,6 +64,7 @@ export const ArticleParamsForm = ({
 			backgroundColor: defaultArticleState.backgroundColor,
 			contentWidth: defaultArticleState.contentWidth,
 		}));
+
 		setArticleState(defaultArticleState);
 	};
 
@@ -82,7 +92,8 @@ export const ArticleParamsForm = ({
 				<form
 					className={styles.form}
 					onSubmit={formSubmitHandler}
-					onReset={formResetHandler}>
+					onReset={formResetHandler}
+					ref={formRef}>
 					<Text as={'h2'} size={31} weight={800} uppercase={true}>
 						Задайте параметры
 					</Text>

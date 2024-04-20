@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"main": "index.js",
 	"license": "MIT",
+	"homepage": "https://starostinlf.github.io/blog-customizer/",
 	"devDependencies": {
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
 		"@storybook/addon-essentials": "^7.6.10",
@@ -93,6 +94,5 @@
 		"commitizen": {
 			"path": "./node_modules/cz-conventional-changelog"
 		}
-	},
-	"homepage": "./"
+	}
 }

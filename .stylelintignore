@@ -1,5 +1,3 @@
-**/normalize.css
-**/normalize.min.css
-**/fonts/
-**/images/
-**/img/
+**/*.min.css
+app/styles/tailwind.css
+app/styles/config/_mixins.scss
